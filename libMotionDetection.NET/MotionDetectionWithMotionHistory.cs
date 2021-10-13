@@ -120,6 +120,8 @@ namespace libMotionDetection
         /// <param name="minTimeDelta">Any change happens between a time interval smaller than this will not be considered, in seconds. Default value 0.5.</param>
         public void Reset (double mhiDuration = 2.0, double maxTimeDelta = 0.05, double minTimeDelta = 0.5)
         {
+            logger.Debug ($"mhiDuration: {mhiDuration}, maxTimeDelta: {maxTimeDelta}, minTimeDelta: {minTimeDelta}");
+
             // Reset the motion masks and motion components
             MotionMask = new Mat ();
             MotionForgroundMask = new Mat ();
@@ -153,6 +155,9 @@ namespace libMotionDetection
         private MotionComponent[] GetFrameMotionComponents (MotionHistory motionHistory, IBackgroundSubtractor forgroundDetector, Mat forgroundMask,
                                                             int motionThreshold, Rectangle[] motionZones, Mat frame)
         {
+            logger.Debug ($"motionHistory: {motionHistory.Mask.Size}, forgroundDetector: {forgroundDetector.AlgorithmPtr}, forgroundMask: {forgroundMask.Size}, " +
+                          $"motionThreshold: {motionThreshold}, motionZones: {motionZones.Length}, frame: {frame.Size}");
+
             Mat segMask = new Mat ();
 
             if (forgroundDetector == null) {
@@ -231,6 +236,8 @@ namespace libMotionDetection
         /// <returns></returns>
         private Mat GetMotionImage (Mat motionMask, MotionHistory motionHistory)
         {
+            logger.Debug ($"motionMask: {motionMask.Size}, motionHistory: {motionHistory.Mask.Size}");
+
             double[] minValues, maxValues;
             Point[] minLoc, maxLoc;
 
@@ -254,6 +261,8 @@ namespace libMotionDetection
         /// <param name="color">The color of the circle and the direction.</param>
         private void DrawMotion (Mat frame, MotionComponent motionComponent, Bgr color)
         {
+            logger.Debug ($"frame: {frame.Size}, motionComponent: {motionComponent.MotionAngle}, color: {color}");
+
             float circleRadius = (motionComponent.MotionBoundingRectangle.Width + motionComponent.MotionBoundingRectangle.Height) >> 2;
             Point center = new Point (motionComponent.MotionBoundingRectangle.X + (motionComponent.MotionBoundingRectangle.Width >> 1),
                                       motionComponent.MotionBoundingRectangle.Y + (motionComponent.MotionBoundingRectangle.Height >> 1));
