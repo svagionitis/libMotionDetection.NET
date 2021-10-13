@@ -53,7 +53,7 @@ namespace libMotionDetection
         private MotionHistory _motionHistory;
         private IBackgroundSubtractor _forgroundDetector;
 
-        private Mat _motionMask = new Mat ();
+        public Mat MotionMask { get; private set; } = new Mat ();
         public Mat MotionForgroundMask { get; private set; } = new Mat ();
 
         public MotionDetectionWithMotionHistory ()
@@ -99,7 +99,7 @@ namespace libMotionDetection
         /// <returns></returns>
         public Mat GetMotionImage ()
         {
-            return GetMotionImage (ref _motionMask, _motionHistory);
+            return GetMotionImage (MotionMask, _motionHistory);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace libMotionDetection
         public void Reset (double mhiDuration = 2.0, double maxTimeDelta = 0.05, double minTimeDelta = 0.5)
         {
             // Reset the motion masks and motion components
-            _motionMask = new Mat ();
+            MotionMask = new Mat ();
             MotionForgroundMask = new Mat ();
             MotionZones = new Rectangle[] { };
             MotionComponents = new MotionComponent[] { };
@@ -229,7 +229,7 @@ namespace libMotionDetection
         /// <param name="motionMask">The updated motion mask</param>
         /// <param name="motionHistory">The motion history instance</param>
         /// <returns></returns>
-        private Mat GetMotionImage (ref Mat motionMask, MotionHistory motionHistory)
+        private Mat GetMotionImage (Mat motionMask, MotionHistory motionHistory)
         {
             double[] minValues, maxValues;
             Point[] minLoc, maxLoc;
