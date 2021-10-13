@@ -12,4 +12,8 @@
     <PackageReference Include="Emgu.CV.UI" Version="4.5.3.4721" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\libMotionDetection.NET\libMotionDetection.NET.csproj" />
+  </ItemGroup>
+
 </Project>
