@@ -40,6 +40,11 @@ namespace libMotionDetection
             /// The number of motion pixels of the motion
             /// </summary>
             public double MotionPixelCount { get; set; }
+
+            public override string ToString () =>
+                $"MotionBoundingRectangle: (X: {MotionBoundingRectangle.X}, Y: {MotionBoundingRectangle.Y}, " +
+                $"Width: {MotionBoundingRectangle.Width}, Height: {MotionBoundingRectangle.Height}), " +
+                $"MotionAngle: {MotionAngle}, MotionPixelCount: {MotionPixelCount}";
         }
         public MotionComponent[] MotionComponents { get; private set; } = new MotionComponent[] { };
 
