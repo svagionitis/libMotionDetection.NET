@@ -50,8 +50,8 @@ namespace libMotionDetection
 
 
         // See example https://github.com/emgucv/emgucv/blob/master/Emgu.CV.Example/MotionDetection
-        private MotionHistory _motionHistory;
-        private IBackgroundSubtractor _forgroundDetector;
+        public MotionHistory History { get; private set; } = null;
+        public IBackgroundSubtractor ForgroundDetector { get; private set; } = null;
 
         public Mat MotionMask { get; private set; } = new Mat ();
         public Mat MotionForgroundMask { get; private set; } = new Mat ();
@@ -60,12 +60,12 @@ namespace libMotionDetection
         {
             // Initialize motion detection algorithms
             // See example here, https://github.com/emgucv/emgucv/blob/master/Emgu.CV.Example/MotionDetection/Form1.cs
-            _motionHistory = new MotionHistory (
+            History = new MotionHistory (
                 2.0, //in second, the duration of motion history you wants to keep
                 0.05, //in second, Any change happens between a time interval larger than this will not be considered
                 0.5); //in second, Any change happens between a time interval smaller than this will not be considered
 
-            _forgroundDetector = new BackgroundSubtractorMOG2 ();
+            ForgroundDetector = new BackgroundSubtractorMOG2 ();
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace libMotionDetection
         {
             // Initialize motion detection algorithms
             // See example here, https://github.com/emgucv/emgucv/blob/master/Emgu.CV.Example/MotionDetection/Form1.cs
-            _motionHistory = new MotionHistory (mhiDuration, maxTimeDelta, minTimeDelta);
+            History = new MotionHistory (mhiDuration, maxTimeDelta, minTimeDelta);
 
-            _forgroundDetector = new BackgroundSubtractorMOG2 ();
+            ForgroundDetector = new BackgroundSubtractorMOG2 ();
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace libMotionDetection
         /// <param name="frame">The frame to get the motion components</param>
         public void GetFrameMotionComponents (Mat frame)
         {
-            MotionComponents = GetFrameMotionComponents (ref _motionHistory, ref _forgroundDetector, MotionForgroundMask,
+            MotionComponents = GetFrameMotionComponents (History, ForgroundDetector, MotionForgroundMask,
                                                          MotionThreshold, MotionZones, frame);
         }
 
@@ -99,7 +99,7 @@ namespace libMotionDetection
         /// <returns></returns>
         public Mat GetMotionImage ()
         {
-            return GetMotionImage (MotionMask, _motionHistory);
+            return GetMotionImage (MotionMask, History);
         }
 
         /// <summary>
@@ -126,8 +126,8 @@ namespace libMotionDetection
             MotionZones = new Rectangle[] { };
             MotionComponents = new MotionComponent[] { };
 
-            _motionHistory = new MotionHistory (mhiDuration, maxTimeDelta, minTimeDelta);
-            _forgroundDetector = new BackgroundSubtractorMOG2 ();
+            History = new MotionHistory (mhiDuration, maxTimeDelta, minTimeDelta);
+            ForgroundDetector = new BackgroundSubtractorMOG2 ();
         }
 
         #region PrivateFunctions
@@ -150,7 +150,7 @@ namespace libMotionDetection
         /// <param name="motionThreshold">The threshold to detect motion.</param>
         /// <param name="motionZones">The motion zones which is an array of rectangles.</param>
         /// <param name="frame">The frame to get the motion components</param>
-        private MotionComponent[] GetFrameMotionComponents (ref MotionHistory motionHistory, ref IBackgroundSubtractor forgroundDetector, Mat forgroundMask,
+        private MotionComponent[] GetFrameMotionComponents (MotionHistory motionHistory, IBackgroundSubtractor forgroundDetector, Mat forgroundMask,
                                                             int motionThreshold, Rectangle[] motionZones, Mat frame)
         {
             Mat segMask = new Mat ();
