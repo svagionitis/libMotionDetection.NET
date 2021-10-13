@@ -49,7 +49,7 @@ namespace libMotionDetection
         private IBackgroundSubtractor _forgroundDetector;
 
         private Mat _motionMask = new Mat ();
-        private Mat _motionForgroundMask = new Mat ();
+        public Mat MotionForgroundMask { get; private set; } = new Mat ();
 
         public MotionDetectionWithMotionHistory ()
         {
@@ -84,7 +84,7 @@ namespace libMotionDetection
         /// <param name="frame">The frame to get the motion components</param>
         public void GetFrameMotionComponents (Mat frame)
         {
-            MotionComponents = GetFrameMotionComponents (ref _motionHistory, ref _forgroundDetector, ref _motionForgroundMask,
+            MotionComponents = GetFrameMotionComponents (ref _motionHistory, ref _forgroundDetector, MotionForgroundMask,
                                                          MotionThreshold, MotionZones, frame);
         }
 
@@ -117,7 +117,7 @@ namespace libMotionDetection
         {
             // Reset the motion masks and motion components
             _motionMask = new Mat ();
-            _motionForgroundMask = new Mat ();
+            MotionForgroundMask = new Mat ();
             MotionZones = new Rectangle[] { };
             MotionComponents = new MotionComponent[] { };
 
@@ -145,7 +145,7 @@ namespace libMotionDetection
         /// <param name="motionThreshold">The threshold to detect motion.</param>
         /// <param name="motionZones">The motion zones which is an array of rectangles.</param>
         /// <param name="frame">The frame to get the motion components</param>
-        private MotionComponent[] GetFrameMotionComponents (ref MotionHistory motionHistory, ref IBackgroundSubtractor forgroundDetector, ref Mat forgroundMask,
+        private MotionComponent[] GetFrameMotionComponents (ref MotionHistory motionHistory, ref IBackgroundSubtractor forgroundDetector, Mat forgroundMask,
                                                             int motionThreshold, Rectangle[] motionZones, Mat frame)
         {
             Mat segMask = new Mat ();
