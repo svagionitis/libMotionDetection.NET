@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using libMotionDetection;
+using Serilog;
 using System;
 using System.Windows.Forms;
 
@@ -7,6 +8,8 @@ namespace MotionDetectionWinFormsApp
 {
     public partial class Form1 : Form
     {
+        private static readonly ILogger logger = Log.Logger.ForContext (typeof (Form1));
+
         private MotionDetectionWithMotionHistory motionDetectionWithMotionHistory;
         private VideoCapture _capture;
 
@@ -20,6 +23,7 @@ namespace MotionDetectionWinFormsApp
                     _capture = new VideoCapture ();
                 } catch (NullReferenceException excpt) {   //show errors if there is any
                     MessageBox.Show (excpt.Message);
+                    logger.Error ($"{excpt.Message}");
                 }
             }
 
@@ -56,10 +60,12 @@ namespace MotionDetectionWinFormsApp
 
             //Display the amount of motions found on the current image
             UpdateText (String.Format ($"Total Motions found: {motionDetectionWithMotionHistory.MotionComponents.Length}"));
+            logger.Information ($"Total Motions found: {motionDetectionWithMotionHistory.MotionComponents.Length}");
 
             int i = 0;
             foreach (MotionDetectionWithMotionHistory.MotionComponent comp in motionDetectionWithMotionHistory.MotionComponents) {
                 UpdateText (String.Format ($"Motion Component {i}: {comp}"));
+                logger.Information ($"Motion Component {i}: {comp}");
                 i++;
             }
         }
