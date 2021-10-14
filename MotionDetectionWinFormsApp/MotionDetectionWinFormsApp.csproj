@@ -4,6 +4,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>Stavros Vagionitis &lt;stavros.vagionitis@gmail.com&gt;</Company>
+    <Authors>Stavros Vagionitis &lt;stavros.vagionitis@gmail.com&gt;</Authors>
+    <Description>A C# Windows Forms Application showing the motion detection of a selected capture video device. This is a modified example from the Emgu.CV framework located `https://github.com/emgucv/emgucv/blob/master/Emgu.CV.Example/MotionDetection/Form1.cs`</Description>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/svagionitis/libMotionDetection.NET</RepositoryUrl>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
   </PropertyGroup>
 
   <ItemGroup>

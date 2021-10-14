@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Stavros Vagionitis &lt;stavros.vagionitis@gmail.com&gt;</Authors>
+    <Description>A C# library for getting information for video capture devices using DirectShowLib library.</Description>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/svagionitis/libMotionDetection.NET</RepositoryUrl>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
   </PropertyGroup>
 
   <ItemGroup>
