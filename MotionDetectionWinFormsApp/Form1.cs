@@ -14,7 +14,6 @@ namespace MotionDetectionWinFormsApp
         private MotionDetectionWithMotionHistory motionDetectionWithMotionHistory;
         private VideoCaptureDevices videoCaptureDevices;
         private VideoCapture _capture;
-        private int captureDeviceIndex = 0;
 
         public Form1 ()
         {
@@ -27,8 +26,10 @@ namespace MotionDetectionWinFormsApp
             foreach (VideoCaptureDevices.DsVideoInputDevice capDevice in videoCaptureDevices.VideoInputDevices) {
                 comboBoxCaptureDevice.Items.Add ($"{capDevice.VideoInputDevice.Name}");
             }
+            // Initialie the combo box to first value
+            comboBoxCaptureDevice.SelectedIndex = 0;
 
-            InitializeCapture ();
+            InitializeCapture (comboBoxCaptureDevice.SelectedIndex);
         }
 
         /// <summary>
@@ -133,9 +134,9 @@ namespace MotionDetectionWinFormsApp
 
             foreach (VideoCaptureDevices.DsVideoInputDevice capDevice in videoCaptureDevices.VideoInputDevices) {
                 if (capDevice.VideoInputDevice.Name.Equals (selectedCaptureDeviceName)) {
-                    captureDeviceIndex = i;
+                    comboBoxCaptureDevice.SelectedIndex = i;
 
-                    logger.Debug ($"Selected Capture device index: {captureDeviceIndex}");
+                    logger.Debug ($"Selected Capture device index: {comboBoxCaptureDevice.SelectedIndex}");
                     break;
                 }
                 i++;
@@ -149,7 +150,7 @@ namespace MotionDetectionWinFormsApp
                 _capture = null;
             }
 
-            InitializeCapture (captureDeviceIndex);
+            InitializeCapture (comboBoxCaptureDevice.SelectedIndex);
         }
     }
 }
