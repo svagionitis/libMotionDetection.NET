@@ -29,6 +29,9 @@ namespace MotionDetectionWinFormsApp
             // Initialie the combo box to first value
             comboBoxCaptureDevice.SelectedIndex = 0;
 
+            // Initialize the text box of motion threshold
+            textBoxMotionThreshold.Text = motionDetectionWithMotionHistory.MotionThreshold.ToString ();
+
             InitializeCapture (comboBoxCaptureDevice.SelectedIndex);
         }
 
@@ -151,6 +154,22 @@ namespace MotionDetectionWinFormsApp
             }
 
             InitializeCapture (comboBoxCaptureDevice.SelectedIndex);
+        }
+
+        /// <summary>
+        /// When the text is changed in the motion threshold text box, then update the motion threshold
+        /// in the motion detection library instance.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxMotionThreshold_TextChanged (object sender, EventArgs e)
+        {
+            try {
+                motionDetectionWithMotionHistory.MotionThreshold = Int32.Parse (textBoxMotionThreshold.Text);
+            } catch (FormatException ex) {
+                MessageBox.Show (ex.Message);
+                logger.Error ($"{ex.Message}");
+            }
         }
     }
 }
