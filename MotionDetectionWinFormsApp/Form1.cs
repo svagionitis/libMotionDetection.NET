@@ -1,5 +1,6 @@
 ﻿using Emgu.CV;
 using libMotionDetection;
+using libVideoCapture;
 using Serilog;
 using System;
 using System.Windows.Forms;
@@ -11,11 +12,15 @@ namespace MotionDetectionWinFormsApp
         private static readonly ILogger logger = Log.Logger.ForContext (typeof (Form1));
 
         private MotionDetectionWithMotionHistory motionDetectionWithMotionHistory;
+        private VideoCaptureDevices videoCaptureDevices;
         private VideoCapture _capture;
 
         public Form1 ()
         {
             InitializeComponent ();
+
+            videoCaptureDevices = new VideoCaptureDevices ();
+            logger.Information ($"Capture Devices: {string.Join ("\n", videoCaptureDevices.VideoInputDevices)}");
 
             //try to create the capture
             if (_capture == null) {
