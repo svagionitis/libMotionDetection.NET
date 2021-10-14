@@ -14,6 +14,7 @@ namespace MotionDetectionWinFormsApp
         private MotionDetectionWithMotionHistory motionDetectionWithMotionHistory;
         private VideoCaptureDevices videoCaptureDevices;
         private VideoCapture _capture;
+        private int captureDeviceIndex = 0;
 
         public Form1 ()
         {
@@ -22,18 +23,37 @@ namespace MotionDetectionWinFormsApp
             videoCaptureDevices = new VideoCaptureDevices ();
             logger.Information ($"Capture Devices: {string.Join ("\n", videoCaptureDevices.VideoInputDevices)}");
 
+            // Populate combo box with capture devices
+            foreach (VideoCaptureDevices.DsVideoInputDevice capDevice in videoCaptureDevices.VideoInputDevices) {
+                comboBoxCaptureDevice.Items.Add ($"{capDevice.VideoInputDevice.Name}");
+            }
+
+            InitializeCapture ();
+        }
+
+        /// <summary>
+        /// Initialize capture device and start capturing frames
+        /// </summary>
+        private void InitializeCapture (int deviceIndex = 0)
+        {
+            if (_capture != null) {
+                _capture.Stop ();
+                _capture.Dispose ();
+                _capture = null;
+            }
+
             //try to create the capture
             if (_capture == null) {
                 try {
-                    _capture = new VideoCapture ();
+                    _capture = new VideoCapture (deviceIndex);
                 } catch (NullReferenceException excpt) {   //show errors if there is any
                     MessageBox.Show (excpt.Message);
                     logger.Error ($"{excpt.Message}");
                 }
             }
 
-            if (_capture != null) //if camera capture has been successfully created
-            {
+            //if camera capture has been successfully created
+            if (_capture != null) {
                 motionDetectionWithMotionHistory = new MotionDetectionWithMotionHistory ();
 
                 _capture.ImageGrabbed += ProcessFrame;
@@ -49,7 +69,7 @@ namespace MotionDetectionWinFormsApp
 
             motionDetectionWithMotionHistory.GetFrameMotionComponents (image);
 
-            //create the motion image 
+            //create the motion image
             Mat motionImage = motionDetectionWithMotionHistory.GetMotionImage ();
 
             motionDetectionWithMotionHistory.MotionDetectionDrawGraphics (image);
@@ -101,6 +121,35 @@ namespace MotionDetectionWinFormsApp
         private void Form1_FormClosed (object sender, FormClosedEventArgs e)
         {
             _capture.Stop ();
+            _capture.Dispose ();
+            _capture = null;
+        }
+
+        private void comboBoxCaptureDevice_SelectedIndexChanged (object sender, EventArgs e)
+        {
+            logger.Debug ($"Selected Capture device: {comboBoxCaptureDevice.Text}");
+            string selectedCaptureDeviceName = comboBoxCaptureDevice.Text;
+            int i = 0;
+
+            foreach (VideoCaptureDevices.DsVideoInputDevice capDevice in videoCaptureDevices.VideoInputDevices) {
+                if (capDevice.VideoInputDevice.Name.Equals (selectedCaptureDeviceName)) {
+                    captureDeviceIndex = i;
+
+                    logger.Debug ($"Selected Capture device index: {captureDeviceIndex}");
+                    break;
+                }
+                i++;
+            }
+
+            // If there is a capture, stop it and reset the motion history
+            if (_capture != null) {
+                motionDetectionWithMotionHistory.Reset ();
+                _capture.Stop ();
+                _capture.Dispose ();
+                _capture = null;
+            }
+
+            InitializeCapture (captureDeviceIndex);
         }
     }
 }
