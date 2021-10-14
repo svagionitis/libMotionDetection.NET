@@ -21,6 +21,32 @@ namespace libMotionDetection
         // An array of motion zones.
         public Rectangle[] MotionZones { get; set; } = new Rectangle[] { };
 
+        public struct MotionHistorySetting
+        {
+            /// <summary>
+            /// In second, the duration of motion history you wants to keep
+            /// </summary>
+            public double MhiDuration { get; set; }
+
+            /// <summary>
+            /// In second. Any change happens between a time interval greater than this will not be considered
+            /// </summary>
+            public double MaxTimeDelta { get; set; }
+
+            /// <summary>
+            /// In second. Any change happens between a time interval smaller than this will not be considered.
+            /// </summary>
+            public double MinTimeDelta { get; set; }
+
+            public override string ToString () =>
+                $"MhiDuration: {MhiDuration}, MaxTimeDelta: {MaxTimeDelta}, MinTimeDelta: {MinTimeDelta}";
+        }
+        public MotionHistorySetting HistorySetting { get; set; } = new MotionHistorySetting {
+            MhiDuration = 2.0,
+            MaxTimeDelta = 0.05,
+            MinTimeDelta = 0.5
+        };
+
         /// <summary>
         /// This structure holds information of the region which detected motion.
         /// </summary>
@@ -61,9 +87,9 @@ namespace libMotionDetection
             // Initialize motion detection algorithms
             // See example here, https://github.com/emgucv/emgucv/blob/master/Emgu.CV.Example/MotionDetection/Form1.cs
             History = new MotionHistory (
-                2.0, //in second, the duration of motion history you wants to keep
-                0.05, //in second, Any change happens between a time interval larger than this will not be considered
-                0.5); //in second, Any change happens between a time interval smaller than this will not be considered
+                HistorySetting.MhiDuration, //in second, the duration of motion history you wants to keep
+                HistorySetting.MaxTimeDelta, //in second, Any change happens between a time interval larger than this will not be considered
+                HistorySetting.MinTimeDelta); //in second, Any change happens between a time interval smaller than this will not be considered
 
             ForgroundDetector = new BackgroundSubtractorMOG2 ();
         }
@@ -74,11 +100,13 @@ namespace libMotionDetection
         /// <param name="mhiDuration">The duration of motion history you want to keep, in seconds</param>
         /// <param name="maxTimeDelta">Any change happens between a time interval larger than this will not be considered, in seconds</param>
         /// <param name="minTimeDelta">Any change happens between a time interval smaller than this will not be considered, in seconds</param>
-        public MotionDetectionWithMotionHistory (double mhiDuration, double maxTimeDelta, double minTimeDelta)
+        public MotionDetectionWithMotionHistory (MotionHistorySetting motionHistorySetting)
         {
             // Initialize motion detection algorithms
             // See example here, https://github.com/emgucv/emgucv/blob/master/Emgu.CV.Example/MotionDetection/Form1.cs
-            History = new MotionHistory (mhiDuration, maxTimeDelta, minTimeDelta);
+            History = new MotionHistory (motionHistorySetting.MhiDuration,
+                                         motionHistorySetting.MaxTimeDelta,
+                                         motionHistorySetting.MinTimeDelta);
 
             ForgroundDetector = new BackgroundSubtractorMOG2 ();
         }
