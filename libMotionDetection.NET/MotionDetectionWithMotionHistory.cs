@@ -160,6 +160,17 @@ namespace libMotionDetection
             ForgroundDetector = new BackgroundSubtractorMOG2 ();
         }
 
+        /// <summary>
+        /// Reset motion detection
+        /// </summary>
+        /// <param name="setting">The motion settings to reset</param>
+        public void Reset (MotionHistorySetting setting)
+        {
+            logger.Debug ($"setting: {setting}");
+
+            Reset (setting.MhiDuration, setting.MaxTimeDelta, setting.MinTimeDelta);
+        }
+
         #region PrivateFunctions
         /// <summary>
         /// Get the motion components of a frame
