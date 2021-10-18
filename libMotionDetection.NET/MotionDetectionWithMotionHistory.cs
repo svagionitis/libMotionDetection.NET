@@ -16,10 +16,38 @@ namespace libMotionDetection
     {
         private static readonly ILogger logger = Log.Logger.ForContext (typeof (MotionDetectionWithMotionHistory));
 
-        // Threshold to define a motion area, reduce the value to detect smaller motion. Default value is 1000.
-        public int MotionThreshold { get; set; } = 1000;
         // An array of motion zones.
         public Rectangle[] MotionZones { get; set; } = new Rectangle[] { };
+
+        public struct MotionSetting
+        {
+            /// <summary>
+            /// This is the threshold to define the motion area.
+            /// If an area is detected with size (Width x Height) 50 x 50 = 2500 and the threshold is 1000,
+            /// then this is a motion area because the area is larger then the threshold.
+            /// IF an area is detected with size 10 x 10 = 100 and the threshold is 1000, then this is not a
+            /// motion area because the area is smaller then the thresold.
+            /// So, in order to detect smaller motion areas, the motion threshold must be reduced.
+            /// </summary>
+            public int MotionThreshold { get; set; }
+
+            /// <summary>
+            /// This is a flag to calculate the motion info of a motion component.
+            /// The motion info are the motion angle and the motion pixel count.
+            /// * Motion Angle: The orientation of the motion component. This is used to draw a line in the circle
+            ///                 with the orientation of the motion. Default value to 1000.
+            /// * Motion Pixel Count: The number of motion pixels of the motion component. There is a further filtering happening
+            ///                       there using a threshhold. TODO: Needs investigation if this is needed. Default value is true.
+            /// </summary>
+            public bool CalculateMotionInfo { get; set; }
+
+            public override string ToString () =>
+                $"MotionThreshold: {MotionThreshold}, CalculateMotionInfo: {CalculateMotionInfo}";
+        }
+        public MotionSetting Setting { get; set; } = new MotionSetting {
+            MotionThreshold = 1000,
+            CalculateMotionInfo = true
+        };
 
         public struct MotionHistorySetting
         {
@@ -118,7 +146,8 @@ namespace libMotionDetection
         public void GetFrameMotionComponents (Mat frame)
         {
             MotionComponents = GetFrameMotionComponents (History, ForgroundDetector, MotionForgroundMask,
-                                                         MotionThreshold, MotionZones, frame);
+                                                         Setting.MotionThreshold, MotionZones, frame,
+                                                         Setting.CalculateMotionInfo);
         }
 
         /// <summary>
@@ -191,8 +220,9 @@ namespace libMotionDetection
         /// <param name="motionThreshold">The threshold to detect motion.</param>
         /// <param name="motionZones">The motion zones which is an array of rectangles.</param>
         /// <param name="frame">The frame to get the motion components</param>
+        /// <param name="calculateMotionInfo">A flag to calculate the motioin info of the motion component.</param>
         private MotionComponent[] GetFrameMotionComponents (MotionHistory motionHistory, IBackgroundSubtractor forgroundDetector, Mat forgroundMask,
-                                                            int motionThreshold, Rectangle[] motionZones, Mat frame)
+                                                            int motionThreshold, Rectangle[] motionZones, Mat frame, bool calculateMotionInfo = true)
         {
             logger.Debug ($"motionHistory: {motionHistory.Mask.Size}, forgroundDetector: {forgroundDetector.AlgorithmPtr}, forgroundMask: {forgroundMask.Size}, " +
                           $"motionThreshold: {motionThreshold}, motionZones: {motionZones.Length}, frame: {frame.Size}");
@@ -246,17 +276,22 @@ namespace libMotionDetection
                     continue;
                 }
 
-                // Find the angle and motion pixel count of the specific area
-                double angle, motionPixelCount;
-                motionHistory.MotionInfo (forgroundMask, motionBoundingRectangle, out angle, out motionPixelCount);
-                // Remove the component that contains too few motion
-                if (motionPixelCount < area * 0.05) {
-                    continue;
+                if (calculateMotionInfo) {
+                    // Find the angle and motion pixel count of the specific area
+                    double angle, motionPixelCount;
+                    motionHistory.MotionInfo (forgroundMask, motionBoundingRectangle, out angle, out motionPixelCount);
+
+                    // Remove the component that contains too few motion
+                    // TODO: Do we really need this. Isn't the MotionThreshold enough??
+                    if (motionPixelCount < area * 0.05) {
+                        continue;
+                    }
+
+                    motionComponent.MotionAngle = angle;
+                    motionComponent.MotionPixelCount = motionPixelCount;
                 }
 
                 motionComponent.MotionBoundingRectangle = motionBoundingRectangle;
-                motionComponent.MotionAngle = angle;
-                motionComponent.MotionPixelCount = motionPixelCount;
 
                 motionComponentsList.Add (motionComponent);
             }

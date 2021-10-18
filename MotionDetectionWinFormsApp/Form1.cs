@@ -30,7 +30,7 @@ namespace MotionDetectionWinFormsApp
             comboBoxCaptureDevice.SelectedIndex = 0;
 
             // Initialize the text box of motion threshold
-            textBoxMotionThreshold.Text = motionDetectionWithMotionHistory.MotionThreshold.ToString ();
+            textBoxMotionThreshold.Text = motionDetectionWithMotionHistory.Setting.MotionThreshold.ToString ();
 
             InitializeCapture (comboBoxCaptureDevice.SelectedIndex);
         }
@@ -165,7 +165,10 @@ namespace MotionDetectionWinFormsApp
         private void textBoxMotionThreshold_TextChanged (object sender, EventArgs e)
         {
             try {
-                motionDetectionWithMotionHistory.MotionThreshold = Int32.Parse (textBoxMotionThreshold.Text);
+                MotionDetectionWithMotionHistory.MotionSetting setting = motionDetectionWithMotionHistory.Setting;
+                setting.MotionThreshold = Int32.Parse (textBoxMotionThreshold.Text);
+
+                motionDetectionWithMotionHistory.Setting = setting;
             } catch (FormatException ex) {
                 MessageBox.Show (ex.Message);
                 logger.Error ($"{ex.Message}");
