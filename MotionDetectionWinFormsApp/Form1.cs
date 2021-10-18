@@ -13,7 +13,7 @@ namespace MotionDetectionWinFormsApp
 
         private MotionDetectionWithMotionHistory motionDetectionWithMotionHistory;
         private VideoCaptureDevices videoCaptureDevices;
-        private VideoCapture _capture;
+        private VideoCapture _capture = null;
 
         public Form1 ()
         {
