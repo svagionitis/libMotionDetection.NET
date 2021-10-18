@@ -289,6 +289,9 @@ namespace libMotionDetection
 
                     motionComponent.MotionAngle = angle;
                     motionComponent.MotionPixelCount = motionPixelCount;
+                } else {
+                    motionComponent.MotionAngle = double.NaN;
+                    motionComponent.MotionPixelCount = -1;
                 }
 
                 motionComponent.MotionBoundingRectangle = motionBoundingRectangle;

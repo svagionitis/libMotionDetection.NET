@@ -28,11 +28,13 @@ namespace MotionDetectionWinFormsApp
             }
             // Initialie the combo box to first value
             comboBoxCaptureDevice.SelectedIndex = 0;
+            InitializeCapture (comboBoxCaptureDevice.SelectedIndex);
 
             // Initialize the text box of motion threshold
             textBoxMotionThreshold.Text = motionDetectionWithMotionHistory.Setting.MotionThreshold.ToString ();
 
-            InitializeCapture (comboBoxCaptureDevice.SelectedIndex);
+            // Initialie the check box of capturing motion info
+            checkBoxCalculateMotionInfo.Checked = motionDetectionWithMotionHistory.Setting.CalculateMotionInfo;
         }
 
         /// <summary>
@@ -73,8 +75,14 @@ namespace MotionDetectionWinFormsApp
 
             motionDetectionWithMotionHistory.GetFrameMotionComponents (image);
 
-            //create the motion image
-            Mat motionImage = motionDetectionWithMotionHistory.GetMotionImage ();
+            // If the check box for motion info is checked,
+            // then calculate the motion image
+            if (checkBoxCalculateMotionInfo.Checked) {
+                //create the motion image
+                Mat motionImage = motionDetectionWithMotionHistory.GetMotionImage ();
+                //Display the image of the motion
+                motionImageBox.Image = motionImage;
+            }
 
             motionDetectionWithMotionHistory.MotionDetectionDrawGraphics (image);
 
@@ -83,9 +91,6 @@ namespace MotionDetectionWinFormsApp
 
             capturedImageBox.Image = image;
             forgroundImageBox.Image = motionDetectionWithMotionHistory.MotionForgroundMask;
-
-            //Display the image of the motion
-            motionImageBox.Image = motionImage;
 
             //Display the amount of motions found on the current image
             UpdateText (String.Format ($"Total Motions found: {motionDetectionWithMotionHistory.MotionComponents.Length}"));
@@ -173,6 +178,19 @@ namespace MotionDetectionWinFormsApp
                 MessageBox.Show (ex.Message);
                 logger.Error ($"{ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// When the checked state of the check box is changed, update the CalculateMotionInfo setting.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxCalculateMotionInfo_CheckedChanged (object sender, EventArgs e)
+        {
+            MotionDetectionWithMotionHistory.MotionSetting setting = motionDetectionWithMotionHistory.Setting;
+            setting.CalculateMotionInfo = checkBoxCalculateMotionInfo.Checked;
+
+            motionDetectionWithMotionHistory.Setting = setting;
         }
     }
 }
