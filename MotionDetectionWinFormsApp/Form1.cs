@@ -35,6 +35,9 @@ namespace MotionDetectionWinFormsApp
 
             // Initialie the check box of capturing motion info
             checkBoxCalculateMotionInfo.Checked = motionDetectionWithMotionHistory.Setting.CalculateMotionInfo;
+
+            // Initialize the text box of Motion Pixel Count Threshold PerCent Area
+            textBoxMotionPixelCountThresholdPerCentArea.Text = motionDetectionWithMotionHistory.Setting.MotionPixelCountThresholdPerCentArea.ToString ();
         }
 
         /// <summary>
@@ -191,6 +194,19 @@ namespace MotionDetectionWinFormsApp
             setting.CalculateMotionInfo = checkBoxCalculateMotionInfo.Checked;
 
             motionDetectionWithMotionHistory.Setting = setting;
+        }
+
+        private void textBoxMotionPixelCountThresholdPerCentArea_TextChanged (object sender, EventArgs e)
+        {
+            try {
+                MotionDetectionWithMotionHistory.MotionSetting setting = motionDetectionWithMotionHistory.Setting;
+                setting.MotionPixelCountThresholdPerCentArea = double.Parse (textBoxMotionPixelCountThresholdPerCentArea.Text);
+
+                motionDetectionWithMotionHistory.Setting = setting;
+            } catch (FormatException ex) {
+                MessageBox.Show (ex.Message);
+                logger.Error ($"{ex.Message}");
+            }
         }
     }
 }
