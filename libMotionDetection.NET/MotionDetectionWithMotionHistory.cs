@@ -37,16 +37,25 @@ namespace libMotionDetection
             /// * Motion Angle: The orientation of the motion component. This is used to draw a line in the circle
             ///                 with the orientation of the motion. Default value to 1000.
             /// * Motion Pixel Count: The number of motion pixels of the motion component. There is a further filtering happening
-            ///                       there using a threshhold. TODO: Needs investigation if this is needed. Default value is true.
+            ///                       there using a threshhold.
             /// </summary>
             public bool CalculateMotionInfo { get; set; }
 
+            /// <summary>
+            /// If the motion pixel count of a candidate motion component is less than
+            /// the specified percentage of the area, then this is not a motion component.
+            /// Default value is 0.05.
+            /// </summary>
+            public double MotionPixelCountThresholdPerCentArea { get; set; }
+
             public override string ToString () =>
-                $"MotionThreshold: {MotionThreshold}, CalculateMotionInfo: {CalculateMotionInfo}";
+                $"MotionThreshold: {MotionThreshold}, CalculateMotionInfo: {CalculateMotionInfo}, " +
+                $"MotionPixelCountThresholdPerCentArea: {MotionPixelCountThresholdPerCentArea}";
         }
         public MotionSetting Setting { get; set; } = new MotionSetting {
             MotionThreshold = 1000,
-            CalculateMotionInfo = true
+            CalculateMotionInfo = true,
+            MotionPixelCountThresholdPerCentArea = 0.05
         };
 
         public struct MotionHistorySetting
@@ -146,8 +155,8 @@ namespace libMotionDetection
         public void GetFrameMotionComponents (Mat frame)
         {
             MotionComponents = GetFrameMotionComponents (History, ForgroundDetector, MotionForgroundMask,
-                                                         Setting.MotionThreshold, MotionZones, frame,
-                                                         Setting.CalculateMotionInfo);
+                                                         Setting.MotionThreshold, Setting.MotionPixelCountThresholdPerCentArea,
+                                                         MotionZones, frame, Setting.CalculateMotionInfo);
         }
 
         /// <summary>
@@ -218,20 +227,28 @@ namespace libMotionDetection
         /// <param name="forgroundDetector">The updated forground detector instance.</param>
         /// <param name="forgroundMask">The updated forground mask.</param>
         /// <param name="motionThreshold">The threshold to detect motion.</param>
+        /// <param name="motionPixelCountThresholdPerCentArea">The percentage area threshold for motion pixel count.</param>
         /// <param name="motionZones">The motion zones which is an array of rectangles.</param>
         /// <param name="frame">The frame to get the motion components</param>
         /// <param name="calculateMotionInfo">A flag to calculate the motioin info of the motion component.</param>
         private MotionComponent[] GetFrameMotionComponents (MotionHistory motionHistory, IBackgroundSubtractor forgroundDetector, Mat forgroundMask,
-                                                            int motionThreshold, Rectangle[] motionZones, Mat frame, bool calculateMotionInfo = true)
+                                                            int motionThreshold, double motionPixelCountThresholdPerCentArea, Rectangle[] motionZones,
+                                                            Mat frame, bool calculateMotionInfo = true)
         {
             logger.Debug ($"motionHistory: {motionHistory.Mask.Size}, forgroundDetector: {forgroundDetector.AlgorithmPtr}, forgroundMask: {forgroundMask.Size}, " +
-                          $"motionThreshold: {motionThreshold}, motionZones: {motionZones.Length}, frame: {frame.Size}");
+                          $"motionThreshold: {motionThreshold}, motionPixelCountThresholdPerCentArea: {motionPixelCountThresholdPerCentArea}, " +
+                          $"motionZones: {motionZones.Length}, frame: {frame.Size}, calculateMotionInfo: {calculateMotionInfo}");
 
             Mat segMask = new Mat ();
 
             if (forgroundDetector == null) {
                 forgroundDetector = new BackgroundSubtractorMOG2 ();
             }
+
+            if (motionPixelCountThresholdPerCentArea < 0.0 || motionPixelCountThresholdPerCentArea > 1.0) {
+                throw new ArgumentOutOfRangeException (nameof (motionPixelCountThresholdPerCentArea), $"Motion pixel count threshold per cent area, {motionPixelCountThresholdPerCentArea}, should be between 0.0 and 1.0");
+            }
+
             // Update the background model, https://www.emgu.com/wiki/files/4.5.1/document/html/38240163-6e39-4ead-5e97-5c9646bef2f6.htm
             forgroundDetector.Apply (frame, forgroundMask);
 
@@ -282,8 +299,7 @@ namespace libMotionDetection
                     motionHistory.MotionInfo (forgroundMask, motionBoundingRectangle, out angle, out motionPixelCount);
 
                     // Remove the component that contains too few motion
-                    // TODO: Do we really need this. Isn't the MotionThreshold enough??
-                    if (motionPixelCount < area * 0.05) {
+                    if (motionPixelCount < area * motionPixelCountThresholdPerCentArea) {
                         continue;
                     }
 
