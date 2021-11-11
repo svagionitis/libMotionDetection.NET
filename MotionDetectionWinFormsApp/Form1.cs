@@ -3,6 +3,7 @@ using libMotionDetection;
 using libVideoCapture;
 using Serilog;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MotionDetectionWinFormsApp
@@ -206,6 +207,57 @@ namespace MotionDetectionWinFormsApp
             } catch (FormatException ex) {
                 MessageBox.Show (ex.Message);
                 logger.Error ($"{ex.Message}");
+            }
+        }
+
+        private Point MotionZoneStartPoint;
+        private Point MotionZoneCurrentPoint;
+        private Rectangle MotionZone = new Rectangle ();
+        bool doRectangle = false;
+        private void capturedImageBox_MouseDown (object sender, MouseEventArgs e)
+        {
+            // Determine the initial rectangle coordinates...
+            MotionZoneStartPoint = e.Location;
+            doRectangle = true;
+        }
+
+        private void capturedImageBox_MouseMove (object sender, MouseEventArgs e)
+        {
+            // Get the points while moving the mouse
+            MotionZoneCurrentPoint = e.Location;
+        }
+
+        private void capturedImageBox_MouseUp (object sender, MouseEventArgs e)
+        {
+            if (doRectangle) {
+                // We finished drawing the rectangle, so add it to the motion zones list and
+                // make the doRectangle flag false
+                Point motionZoneEndPoint = e.Location;
+
+                MotionZone.Location = new Point (
+                    Math.Min (MotionZoneStartPoint.X, motionZoneEndPoint.X),
+                    Math.Min (MotionZoneStartPoint.Y, motionZoneEndPoint.Y));
+                MotionZone.Size = new Size (
+                    Math.Abs (MotionZoneStartPoint.X - motionZoneEndPoint.X),
+                    Math.Abs (MotionZoneStartPoint.Y - motionZoneEndPoint.Y));
+
+                motionDetectionWithMotionHistory.MotionZones.Add (MotionZone);
+
+                doRectangle = false;
+            }
+        }
+
+        private void capturedImageBox_Paint (object sender, PaintEventArgs e)
+        {
+            if (doRectangle) {
+                MotionZone.Location = new Point (
+                    Math.Min (MotionZoneStartPoint.X, MotionZoneCurrentPoint.X),
+                    Math.Min (MotionZoneStartPoint.Y, MotionZoneCurrentPoint.Y));
+                MotionZone.Size = new Size (
+                    Math.Abs (MotionZoneStartPoint.X - MotionZoneCurrentPoint.X),
+                    Math.Abs (MotionZoneStartPoint.Y - MotionZoneCurrentPoint.Y));
+
+                e.Graphics.DrawRectangle (Pens.Red, MotionZone);
             }
         }
     }

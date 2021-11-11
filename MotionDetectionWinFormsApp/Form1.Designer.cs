@@ -85,6 +85,10 @@ namespace MotionDetectionWinFormsApp
             this.capturedImageBox.Size = new System.Drawing.Size(477, 415);
             this.capturedImageBox.TabIndex = 0;
             this.capturedImageBox.TabStop = false;
+            this.capturedImageBox.Paint += new System.Windows.Forms.PaintEventHandler(this.capturedImageBox_Paint);
+            this.capturedImageBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.capturedImageBox_MouseDown);
+            this.capturedImageBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.capturedImageBox_MouseMove);
+            this.capturedImageBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.capturedImageBox_MouseUp);
             // 
             // forgroundImageBox
             // 
