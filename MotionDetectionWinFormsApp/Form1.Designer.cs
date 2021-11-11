@@ -68,6 +68,7 @@ namespace MotionDetectionWinFormsApp
             // 
             // motionImageBox
             // 
+            this.motionImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.motionImageBox.Location = new System.Drawing.Point(981, 111);
             this.motionImageBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.motionImageBox.Name = "motionImageBox";
@@ -77,6 +78,7 @@ namespace MotionDetectionWinFormsApp
             // 
             // capturedImageBox
             // 
+            this.capturedImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.capturedImageBox.Location = new System.Drawing.Point(8, 111);
             this.capturedImageBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.capturedImageBox.Name = "capturedImageBox";
@@ -86,6 +88,7 @@ namespace MotionDetectionWinFormsApp
             // 
             // forgroundImageBox
             // 
+            this.forgroundImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.forgroundImageBox.Location = new System.Drawing.Point(501, 111);
             this.forgroundImageBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.forgroundImageBox.Name = "forgroundImageBox";
