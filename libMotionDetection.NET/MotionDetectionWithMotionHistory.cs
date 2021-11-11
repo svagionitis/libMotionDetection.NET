@@ -17,7 +17,7 @@ namespace libMotionDetection
         private static readonly ILogger logger = Log.Logger.ForContext (typeof (MotionDetectionWithMotionHistory));
 
         // An array of motion zones.
-        public Rectangle[] MotionZones { get; set; } = new Rectangle[] { };
+        public List<Rectangle> MotionZones { get; set; } = new List<Rectangle> ();
 
         public struct MotionSetting
         {
@@ -191,7 +191,7 @@ namespace libMotionDetection
             // Reset the motion masks and motion components
             MotionMask = new Mat ();
             MotionForgroundMask = new Mat ();
-            MotionZones = new Rectangle[] { };
+            MotionZones = new List<Rectangle> ();
             MotionComponents = new MotionComponent[] { };
 
             History = new MotionHistory (mhiDuration, maxTimeDelta, minTimeDelta);
@@ -228,16 +228,16 @@ namespace libMotionDetection
         /// <param name="forgroundMask">The updated forground mask.</param>
         /// <param name="motionThreshold">The threshold to detect motion.</param>
         /// <param name="motionPixelCountThresholdPerCentArea">The percentage area threshold for motion pixel count.</param>
-        /// <param name="motionZones">The motion zones which is an array of rectangles.</param>
+        /// <param name="motionZones">The motion zones which is a list of rectangles.</param>
         /// <param name="frame">The frame to get the motion components</param>
         /// <param name="calculateMotionInfo">A flag to calculate the motioin info of the motion component.</param>
         private MotionComponent[] GetFrameMotionComponents (MotionHistory motionHistory, IBackgroundSubtractor forgroundDetector, Mat forgroundMask,
-                                                            int motionThreshold, double motionPixelCountThresholdPerCentArea, Rectangle[] motionZones,
+                                                            int motionThreshold, double motionPixelCountThresholdPerCentArea, List<Rectangle> motionZones,
                                                             Mat frame, bool calculateMotionInfo = true)
         {
             logger.Debug ($"motionHistory: {motionHistory.Mask.Size}, forgroundDetector: {forgroundDetector.AlgorithmPtr}, forgroundMask: {forgroundMask.Size}, " +
                           $"motionThreshold: {motionThreshold}, motionPixelCountThresholdPerCentArea: {motionPixelCountThresholdPerCentArea}, " +
-                          $"motionZones: {motionZones.Length}, frame: {frame.Size}, calculateMotionInfo: {calculateMotionInfo}");
+                          $"motionZones: {motionZones.Count}, frame: {frame.Size}, calculateMotionInfo: {calculateMotionInfo}");
 
             Mat segMask = new Mat ();
 
@@ -272,7 +272,7 @@ namespace libMotionDetection
 
                 // If there are motion zones, then check if the motion rectangles
                 // are in those zones
-                if (motionZones.Length != 0) {
+                if (motionZones.Count != 0) {
                     bool isInMotionZone = false;
                     // Check if the motion component is in the motion zones
                     foreach (Rectangle motionZone in motionZones) {
@@ -384,10 +384,10 @@ namespace libMotionDetection
         /// * Draw the motion components as circle with color red.
         /// </remarks>
         /// <param name="motionComponents">The motion components to be used in order to draw the graphics.</param>
-        /// <param name="motionZones">The motion zones which is an array of rectangles.</param>
+        /// <param name="motionZones">The motion zones which is a list of rectangles.</param>
         /// <param name="frame">The frame to draw the motion detection graphics.</param>
         /// <param name="lineCrossing">A line indicating a line crossing. Default value is a zero length line.</param>
-        private void MotionDetectionDrawGraphics (MotionComponent[] motionComponents, Rectangle[] motionZones,
+        private void MotionDetectionDrawGraphics (MotionComponent[] motionComponents, List<Rectangle> motionZones,
                                                   Mat frame, LineSegment2D lineCrossing = new LineSegment2D ())
         {
             // If there is a line, draw it blue
