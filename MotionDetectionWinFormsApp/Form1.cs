@@ -221,8 +221,27 @@ namespace MotionDetectionWinFormsApp
                 MotionZoneStartPoint = e.Location;
                 doRectangle = true;
             } else if (e.Button == MouseButtons.Right) {
-                // With right click remove all motion zone rectangles
-                motionDetectionWithMotionHistory.MotionZones.Clear ();
+                bool doRemoveAllMotionZones = true;
+
+                Rectangle motionZoneToRemove = new Rectangle ();
+                foreach (Rectangle motionZone in motionDetectionWithMotionHistory.MotionZones) {
+                    if (motionZone.Contains (e.Location)) {
+                        // If the motion zone rectangle contains the mouse location, then remove only this motion zone
+                        motionZoneToRemove = motionZone;
+                        doRemoveAllMotionZones = false;
+                        break;
+                    }
+                }
+
+                if (!doRemoveAllMotionZones) {
+                    motionDetectionWithMotionHistory.MotionZones.Remove (motionZoneToRemove);
+                }
+
+                if (doRemoveAllMotionZones) {
+                    // If the mouse location does not belong to any motion zone rectangle,
+                    // then remove all of them
+                    motionDetectionWithMotionHistory.MotionZones.Clear ();
+                }
             }
         }
 
