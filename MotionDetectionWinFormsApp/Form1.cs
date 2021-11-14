@@ -220,6 +220,9 @@ namespace MotionDetectionWinFormsApp
                 // Determine the initial rectangle coordinates...
                 MotionZoneStartPoint = e.Location;
                 doRectangle = true;
+            } else if (e.Button == MouseButtons.Right) {
+                // With right click remove all motion zone rectangles
+                motionDetectionWithMotionHistory.MotionZones.Clear ();
             }
         }
 
