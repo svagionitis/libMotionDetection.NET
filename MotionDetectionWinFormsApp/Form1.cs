@@ -15,6 +15,7 @@ namespace MotionDetectionWinFormsApp
         private MotionDetectionWithMotionHistory motionDetectionWithMotionHistory;
         private VideoCaptureDevices videoCaptureDevices;
         private VideoCapture _capture = null;
+        private string videoFilename = null;
 
         public Form1 ()
         {
@@ -55,7 +56,12 @@ namespace MotionDetectionWinFormsApp
             //try to create the capture
             if (_capture == null) {
                 try {
-                    _capture = new VideoCapture (deviceIndex);
+                    if (videoFilename == null) {
+                        _capture = new VideoCapture (deviceIndex);
+                    } else {
+                        _capture = new VideoCapture (videoFilename);
+                        videoFilename = null;
+                    }
                 } catch (NullReferenceException excpt) {   //show errors if there is any
                     MessageBox.Show (excpt.Message);
                     logger.Error ($"{excpt.Message}");
@@ -286,6 +292,17 @@ namespace MotionDetectionWinFormsApp
                     Math.Abs (MotionZoneStartPoint.Y - MotionZoneCurrentPoint.Y));
 
                 e.Graphics.DrawRectangle (Pens.Red, MotionZone);
+            }
+        }
+
+        private void selectFileButton_Click (object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog () == DialogResult.OK) {
+                logger.Debug ($"Selected file: {openFileDialog1.FileName}");
+
+                videoFilename = openFileDialog1.FileName;
+
+                InitializeCapture (-1);
             }
         }
     }

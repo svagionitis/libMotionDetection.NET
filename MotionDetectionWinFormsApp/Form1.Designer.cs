@@ -31,6 +31,8 @@ namespace MotionDetectionWinFormsApp
             this.textBoxMotionPixelCountThresholdPerCentArea = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBoxMotionThreshold = new System.Windows.Forms.TextBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.selectFileButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.motionImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.capturedImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.forgroundImageBox)).BeginInit();
@@ -179,11 +181,26 @@ namespace MotionDetectionWinFormsApp
             this.textBoxMotionThreshold.Size = new System.Drawing.Size(153, 43);
             this.textBoxMotionThreshold.TabIndex = 14;
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // selectFileButton
+            // 
+            this.selectFileButton.Location = new System.Drawing.Point(600, 24);
+            this.selectFileButton.Name = "selectFileButton";
+            this.selectFileButton.Size = new System.Drawing.Size(282, 45);
+            this.selectFileButton.TabIndex = 18;
+            this.selectFileButton.Text = "Select A Video File...";
+            this.selectFileButton.UseVisualStyleBackColor = true;
+            this.selectFileButton.Click += new System.EventHandler(this.selectFileButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1536, 931);
+            this.Controls.Add(this.selectFileButton);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBoxMotionPixelCountThresholdPerCentArea);
             this.Controls.Add(this.label6);
@@ -226,6 +243,8 @@ namespace MotionDetectionWinFormsApp
         private System.Windows.Forms.TextBox textBoxMotionPixelCountThresholdPerCentArea;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxMotionThreshold;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button selectFileButton;
     }
 }
 
