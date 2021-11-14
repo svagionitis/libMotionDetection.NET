@@ -216,34 +216,40 @@ namespace MotionDetectionWinFormsApp
         bool doRectangle = false;
         private void capturedImageBox_MouseDown (object sender, MouseEventArgs e)
         {
-            // Determine the initial rectangle coordinates...
-            MotionZoneStartPoint = e.Location;
-            doRectangle = true;
+            if (e.Button == MouseButtons.Left) {
+                // Determine the initial rectangle coordinates...
+                MotionZoneStartPoint = e.Location;
+                doRectangle = true;
+            }
         }
 
         private void capturedImageBox_MouseMove (object sender, MouseEventArgs e)
         {
-            // Get the points while moving the mouse
-            MotionZoneCurrentPoint = e.Location;
+            if (e.Button == MouseButtons.Left) {
+                // Get the points while moving the mouse
+                MotionZoneCurrentPoint = e.Location;
+            }
         }
 
         private void capturedImageBox_MouseUp (object sender, MouseEventArgs e)
         {
-            if (doRectangle) {
-                // We finished drawing the rectangle, so add it to the motion zones list and
-                // make the doRectangle flag false
-                Point motionZoneEndPoint = e.Location;
+            if (e.Button == MouseButtons.Left) {
+                if (doRectangle) {
+                    // We finished drawing the rectangle, so add it to the motion zones list and
+                    // make the doRectangle flag false
+                    Point motionZoneEndPoint = e.Location;
 
-                MotionZone.Location = new Point (
-                    Math.Min (MotionZoneStartPoint.X, motionZoneEndPoint.X),
-                    Math.Min (MotionZoneStartPoint.Y, motionZoneEndPoint.Y));
-                MotionZone.Size = new Size (
-                    Math.Abs (MotionZoneStartPoint.X - motionZoneEndPoint.X),
-                    Math.Abs (MotionZoneStartPoint.Y - motionZoneEndPoint.Y));
+                    MotionZone.Location = new Point (
+                        Math.Min (MotionZoneStartPoint.X, motionZoneEndPoint.X),
+                        Math.Min (MotionZoneStartPoint.Y, motionZoneEndPoint.Y));
+                    MotionZone.Size = new Size (
+                        Math.Abs (MotionZoneStartPoint.X - motionZoneEndPoint.X),
+                        Math.Abs (MotionZoneStartPoint.Y - motionZoneEndPoint.Y));
 
-                motionDetectionWithMotionHistory.MotionZones.Add (MotionZone);
+                    motionDetectionWithMotionHistory.MotionZones.Add (MotionZone);
 
-                doRectangle = false;
+                    doRectangle = false;
+                }
             }
         }
 
