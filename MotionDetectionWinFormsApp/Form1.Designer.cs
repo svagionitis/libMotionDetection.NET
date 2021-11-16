@@ -28,6 +28,8 @@ namespace MotionDetectionWinFormsApp
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.selectFileButton = new System.Windows.Forms.Button();
             this.inputGroupBox = new System.Windows.Forms.GroupBox();
+            this.rtspURITextBox = new System.Windows.Forms.TextBox();
+            this.rtspURILabel = new System.Windows.Forms.Label();
             this.settingsGroupBox = new System.Windows.Forms.GroupBox();
             this.outputGroupBox = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -143,6 +145,8 @@ namespace MotionDetectionWinFormsApp
             // 
             // inputGroupBox
             // 
+            this.inputGroupBox.Controls.Add(this.rtspURITextBox);
+            this.inputGroupBox.Controls.Add(this.rtspURILabel);
             this.inputGroupBox.Controls.Add(this.selectFileButton);
             this.inputGroupBox.Controls.Add(this.comboBoxCaptureDevice);
             this.inputGroupBox.Controls.Add(this.label5);
@@ -155,6 +159,25 @@ namespace MotionDetectionWinFormsApp
             this.inputGroupBox.TabIndex = 19;
             this.inputGroupBox.TabStop = false;
             this.inputGroupBox.Text = "Input";
+            // 
+            // rtspURITextBox
+            // 
+            this.rtspURITextBox.Location = new System.Drawing.Point(1892, 65);
+            this.rtspURITextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.rtspURITextBox.Name = "rtspURITextBox";
+            this.rtspURITextBox.Size = new System.Drawing.Size(478, 43);
+            this.rtspURITextBox.TabIndex = 19;
+            this.rtspURITextBox.TextChanged += new System.EventHandler(this.rtspURITextBox_TextChanged);
+            // 
+            // rtspURILabel
+            // 
+            this.rtspURILabel.AutoSize = true;
+            this.rtspURILabel.Location = new System.Drawing.Point(1759, 69);
+            this.rtspURILabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.rtspURILabel.Name = "rtspURILabel";
+            this.rtspURILabel.Size = new System.Drawing.Size(129, 37);
+            this.rtspURILabel.TabIndex = 20;
+            this.rtspURILabel.Text = "RTSP URI:";
             // 
             // settingsGroupBox
             // 
@@ -310,6 +333,8 @@ namespace MotionDetectionWinFormsApp
         private Emgu.CV.UI.ImageBox motionImageBox;
         private System.Windows.Forms.Label label1;
         private Emgu.CV.UI.ImageBox capturedImageBox;
+        private System.Windows.Forms.TextBox rtspURITextBox;
+        private System.Windows.Forms.Label rtspURILabel;
     }
 }
 

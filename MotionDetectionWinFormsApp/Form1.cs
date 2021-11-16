@@ -16,6 +16,7 @@ namespace MotionDetectionWinFormsApp
         private VideoCaptureDevices videoCaptureDevices;
         private VideoCapture _capture = null;
         private string videoFilename = null;
+        private string rtspURI = null;
 
         public Form1 ()
         {
@@ -56,11 +57,14 @@ namespace MotionDetectionWinFormsApp
             //try to create the capture
             if (_capture == null) {
                 try {
-                    if (videoFilename == null) {
-                        _capture = new VideoCapture (deviceIndex);
-                    } else {
+                    if (videoFilename != null) {
                         _capture = new VideoCapture (videoFilename);
                         videoFilename = null;
+                    } else if (rtspURI != null) {
+                        _capture = new VideoCapture (rtspURI);
+                        rtspURI = null;
+                    } else {
+                        _capture = new VideoCapture (deviceIndex);
                     }
                 } catch (NullReferenceException excpt) {   //show errors if there is any
                     MessageBox.Show (excpt.Message);
@@ -304,6 +308,24 @@ namespace MotionDetectionWinFormsApp
 
                 InitializeCapture (-1);
             }
+        }
+
+        private void rtspURITextBox_TextChanged (object sender, EventArgs e)
+        {
+            logger.Debug ($"RTSP URI: {rtspURITextBox.Text}");
+
+            // If there is a capture, stop it and reset the motion history
+            if (_capture != null) {
+                motionDetectionWithMotionHistory.Reset ();
+                _capture.Stop ();
+                _capture.ImageGrabbed -= ProcessFrame;
+                _capture.Dispose ();
+                _capture = null;
+            }
+
+            rtspURI = rtspURITextBox.Text;
+
+            InitializeCapture (-1);
         }
     }
 }
