@@ -50,6 +50,7 @@ namespace MotionDetectionWinFormsApp
         {
             if (_capture != null) {
                 _capture.Stop ();
+                _capture.ImageGrabbed -= ProcessFrame;
                 _capture.Dispose ();
                 _capture = null;
             }
@@ -144,6 +145,7 @@ namespace MotionDetectionWinFormsApp
         private void Form1_FormClosed (object sender, FormClosedEventArgs e)
         {
             _capture.Stop ();
+            _capture.ImageGrabbed -= ProcessFrame;
             _capture.Dispose ();
             _capture = null;
         }
@@ -168,6 +170,7 @@ namespace MotionDetectionWinFormsApp
             if (_capture != null) {
                 motionDetectionWithMotionHistory.Reset ();
                 _capture.Stop ();
+                _capture.ImageGrabbed -= ProcessFrame;
                 _capture.Dispose ();
                 _capture = null;
             }
@@ -303,6 +306,15 @@ namespace MotionDetectionWinFormsApp
         {
             if (openFileDialog1.ShowDialog () == DialogResult.OK) {
                 logger.Debug ($"Selected file: {openFileDialog1.FileName}");
+
+                // If there is a capture, stop it and reset the motion history
+                if (_capture != null) {
+                    motionDetectionWithMotionHistory.Reset ();
+                    _capture.Stop ();
+                    _capture.ImageGrabbed -= ProcessFrame;
+                    _capture.Dispose ();
+                    _capture = null;
+                }
 
                 videoFilename = openFileDialog1.FileName;
 
