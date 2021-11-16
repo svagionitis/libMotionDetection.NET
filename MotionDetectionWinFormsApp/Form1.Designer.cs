@@ -204,6 +204,9 @@ namespace MotionDetectionWinFormsApp
             // 
             // forgroundImageBox
             // 
+            this.forgroundImageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.forgroundImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.forgroundImageBox.Location = new System.Drawing.Point(1231, 261);
             this.forgroundImageBox.Margin = new System.Windows.Forms.Padding(9, 7, 9, 7);
@@ -224,6 +227,9 @@ namespace MotionDetectionWinFormsApp
             // 
             // motionImageBox
             // 
+            this.motionImageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.motionImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.motionImageBox.Location = new System.Drawing.Point(2367, 261);
             this.motionImageBox.Margin = new System.Windows.Forms.Padding(9, 7, 9, 7);
@@ -244,6 +250,9 @@ namespace MotionDetectionWinFormsApp
             // 
             // capturedImageBox
             // 
+            this.capturedImageBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.capturedImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
             this.capturedImageBox.Location = new System.Drawing.Point(70, 261);
             this.capturedImageBox.Margin = new System.Windows.Forms.Padding(9, 7, 9, 7);
