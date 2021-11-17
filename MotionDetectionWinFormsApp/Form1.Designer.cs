@@ -62,7 +62,7 @@ namespace MotionDetectionWinFormsApp
             this.comboBoxCaptureDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCaptureDevice.FormattingEnabled = true;
             this.comboBoxCaptureDevice.Location = new System.Drawing.Point(272, 68);
-            this.comboBoxCaptureDevice.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.comboBoxCaptureDevice.Margin = new System.Windows.Forms.Padding(7);
             this.comboBoxCaptureDevice.Name = "comboBoxCaptureDevice";
             this.comboBoxCaptureDevice.Size = new System.Drawing.Size(551, 45);
             this.comboBoxCaptureDevice.TabIndex = 7;
@@ -82,7 +82,7 @@ namespace MotionDetectionWinFormsApp
             // 
             this.checkBoxCalculateMotionInfo.AutoSize = true;
             this.checkBoxCalculateMotionInfo.Location = new System.Drawing.Point(1224, 151);
-            this.checkBoxCalculateMotionInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBoxCalculateMotionInfo.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxCalculateMotionInfo.Name = "checkBoxCalculateMotionInfo";
             this.checkBoxCalculateMotionInfo.Size = new System.Drawing.Size(305, 41);
             this.checkBoxCalculateMotionInfo.TabIndex = 11;
@@ -123,7 +123,7 @@ namespace MotionDetectionWinFormsApp
             // textBoxMotionThreshold
             // 
             this.textBoxMotionThreshold.Location = new System.Drawing.Point(616, 155);
-            this.textBoxMotionThreshold.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxMotionThreshold.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxMotionThreshold.Name = "textBoxMotionThreshold";
             this.textBoxMotionThreshold.Size = new System.Drawing.Size(339, 43);
             this.textBoxMotionThreshold.TabIndex = 14;
@@ -136,7 +136,7 @@ namespace MotionDetectionWinFormsApp
             // selectFileButton
             // 
             this.selectFileButton.Location = new System.Drawing.Point(986, 68);
-            this.selectFileButton.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.selectFileButton.Margin = new System.Windows.Forms.Padding(7);
             this.selectFileButton.Name = "selectFileButton";
             this.selectFileButton.Size = new System.Drawing.Size(634, 52);
             this.selectFileButton.TabIndex = 18;
@@ -153,9 +153,9 @@ namespace MotionDetectionWinFormsApp
             this.inputGroupBox.Controls.Add(this.label5);
             this.inputGroupBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.inputGroupBox.Location = new System.Drawing.Point(0, 0);
-            this.inputGroupBox.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.inputGroupBox.Margin = new System.Windows.Forms.Padding(7);
             this.inputGroupBox.Name = "inputGroupBox";
-            this.inputGroupBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.inputGroupBox.Padding = new System.Windows.Forms.Padding(7);
             this.inputGroupBox.Size = new System.Drawing.Size(3481, 171);
             this.inputGroupBox.TabIndex = 19;
             this.inputGroupBox.TabStop = false;
@@ -164,7 +164,7 @@ namespace MotionDetectionWinFormsApp
             // rtspURITextBox
             // 
             this.rtspURITextBox.Location = new System.Drawing.Point(1892, 65);
-            this.rtspURITextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rtspURITextBox.Margin = new System.Windows.Forms.Padding(2);
             this.rtspURITextBox.Name = "rtspURITextBox";
             this.rtspURITextBox.Size = new System.Drawing.Size(479, 43);
             this.rtspURITextBox.TabIndex = 19;
@@ -190,9 +190,9 @@ namespace MotionDetectionWinFormsApp
             this.settingsGroupBox.Controls.Add(this.label6);
             this.settingsGroupBox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.settingsGroupBox.Location = new System.Drawing.Point(0, 1210);
-            this.settingsGroupBox.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.settingsGroupBox.Margin = new System.Windows.Forms.Padding(7);
             this.settingsGroupBox.Name = "settingsGroupBox";
-            this.settingsGroupBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.settingsGroupBox.Padding = new System.Windows.Forms.Padding(7);
             this.settingsGroupBox.Size = new System.Drawing.Size(3481, 502);
             this.settingsGroupBox.TabIndex = 20;
             this.settingsGroupBox.TabStop = false;
@@ -208,9 +208,9 @@ namespace MotionDetectionWinFormsApp
             this.outputGroupBox.Controls.Add(this.capturedImageBox);
             this.outputGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outputGroupBox.Location = new System.Drawing.Point(0, 171);
-            this.outputGroupBox.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.outputGroupBox.Margin = new System.Windows.Forms.Padding(7);
             this.outputGroupBox.Name = "outputGroupBox";
-            this.outputGroupBox.Padding = new System.Windows.Forms.Padding(7, 7, 7, 7);
+            this.outputGroupBox.Padding = new System.Windows.Forms.Padding(7);
             this.outputGroupBox.Size = new System.Drawing.Size(3481, 1039);
             this.outputGroupBox.TabIndex = 21;
             this.outputGroupBox.TabStop = false;
@@ -236,6 +236,7 @@ namespace MotionDetectionWinFormsApp
             this.forgroundImageBox.Margin = new System.Windows.Forms.Padding(9, 7, 9, 7);
             this.forgroundImageBox.Name = "forgroundImageBox";
             this.forgroundImageBox.Size = new System.Drawing.Size(1042, 638);
+            this.forgroundImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.forgroundImageBox.TabIndex = 11;
             this.forgroundImageBox.TabStop = false;
             // 
@@ -259,6 +260,7 @@ namespace MotionDetectionWinFormsApp
             this.motionImageBox.Margin = new System.Windows.Forms.Padding(9, 7, 9, 7);
             this.motionImageBox.Name = "motionImageBox";
             this.motionImageBox.Size = new System.Drawing.Size(1042, 638);
+            this.motionImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.motionImageBox.TabIndex = 9;
             this.motionImageBox.TabStop = false;
             // 
@@ -282,6 +284,7 @@ namespace MotionDetectionWinFormsApp
             this.capturedImageBox.Margin = new System.Windows.Forms.Padding(9, 7, 9, 7);
             this.capturedImageBox.Name = "capturedImageBox";
             this.capturedImageBox.Size = new System.Drawing.Size(1073, 638);
+            this.capturedImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.capturedImageBox.TabIndex = 7;
             this.capturedImageBox.TabStop = false;
             this.capturedImageBox.Paint += new System.Windows.Forms.PaintEventHandler(this.capturedImageBox_Paint);
