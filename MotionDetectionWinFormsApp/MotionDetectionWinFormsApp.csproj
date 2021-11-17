@@ -12,6 +12,7 @@
     <RepositoryUrl>https://github.com/svagionitis/libMotionDetection.NET</RepositoryUrl>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Platforms>AnyCPU;x86;x64</Platforms>
+    <ApplicationIcon>MotionDetectionIconColour.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
