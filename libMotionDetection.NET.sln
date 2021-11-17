@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libMotionDetection.NET", "libMotionDetection.NET\libMotionDetection.NET.csproj", "{E0F9EF06-6605-469E-863F-826D01FB4DB3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotionDetectionWinFormsApp", "MotionDetectionWinFormsApp\MotionDetectionWinFormsApp.csproj", "{8E57FC1E-5D59-4498-9B2E-620A6F1D375A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotionDetectionWithMotionHistoryWinFormsApp", "MotionDetectionWithMotionHistoryWinFormsApp\MotionDetectionWithMotionHistoryWinFormsApp.csproj", "{8E57FC1E-5D59-4498-9B2E-620A6F1D375A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libVideoCapture.NET", "libVideoCapture.NET\libVideoCapture.NET.csproj", "{FF67CE4F-02EC-4D12-A6FF-469908FA30C9}"
 EndProject
