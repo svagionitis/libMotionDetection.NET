@@ -16,7 +16,7 @@ namespace libMotionDetection
     {
         private static readonly ILogger logger = Log.Logger.ForContext (typeof (MotionDetectionWithMotionHistory));
 
-        // An array of motion zones.
+        // A list of motion zones.
         public List<Rectangle> MotionZones { get; set; } = new List<Rectangle> ();
 
         public struct MotionSetting
