@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotionDetectionWithMotionHi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libVideoCapture.NET", "libVideoCapture.NET\libVideoCapture.NET.csproj", "{FF67CE4F-02EC-4D12-A6FF-469908FA30C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotionDetectionWithOpticalFlowWinFormsApp", "MotionDetectionWithOpticalFlowWinFormsApp\MotionDetectionWithOpticalFlowWinFormsApp.csproj", "{0E636AD3-1993-4057-AF58-F697E345D83A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{FF67CE4F-02EC-4D12-A6FF-469908FA30C9}.Release|x64.Build.0 = Release|x64
 		{FF67CE4F-02EC-4D12-A6FF-469908FA30C9}.Release|x86.ActiveCfg = Release|x86
 		{FF67CE4F-02EC-4D12-A6FF-469908FA30C9}.Release|x86.Build.0 = Release|x86
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Debug|x64.Build.0 = Debug|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Debug|x86.Build.0 = Debug|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Release|x64.ActiveCfg = Release|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Release|x64.Build.0 = Release|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Release|x86.ActiveCfg = Release|Any CPU
+		{0E636AD3-1993-4057-AF58-F697E345D83A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

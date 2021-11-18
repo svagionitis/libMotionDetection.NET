@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>Stavros Vagionitis &lt;stavros.vagionitis@gmail.com&gt;</Company>
+    <Authors>Stavros Vagionitis &lt;stavros.vagionitis@gmail.com&gt;</Authors>
+    <Description>A C# Windows Forms Application showing the motion detection of a selected capture video device using optical flow.</Description>
+    <RepositoryUrl>https://github.com/svagionitis/libMotionDetection.NET</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <ApplicationIcon>MotionDetectionIconColour.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Emgu.CV" Version="4.5.4.4788" />
+    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.5.4.4788" />
+    <PackageReference Include="Emgu.CV.UI" Version="4.5.4.4788" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+    <PackageReference Include="Serilog.Settings.AppSettings" Version="2.2.2" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\libVideoCapture.NET\libVideoCapture.NET.csproj" />
+  </ItemGroup>
+
+</Project>
