@@ -1,4 +1,5 @@
 ﻿using Emgu.CV;
+using libMotionDetection;
 using libVideoCapture;
 using Serilog;
 using System;
@@ -10,6 +11,7 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
     {
         private static readonly ILogger logger = Log.Logger.ForContext (typeof (Form1));
 
+        private MotionDetectionWithOpticalFlow motionDetectionWithOpticalFlow;
         private VideoCaptureDevices videoCaptureDevices;
         private VideoCapture _capture = null;
         private string videoFilename = null;
@@ -63,23 +65,35 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
 
             //if camera capture has been successfully created
             if (_capture != null) {
+                motionDetectionWithOpticalFlow = new MotionDetectionWithOpticalFlow ();
+
                 _capture.ImageGrabbed += ProcessFrame;
                 _capture.Start ();
             }
         }
 
+        private Mat currentFrame = new Mat ();
+        private Mat previousFrame = new Mat ();
         private void ProcessFrame (object sender, EventArgs e)
         {
-            Mat image = new Mat ();
-
-            _capture.Retrieve (image);
-
             if (this.Disposing || this.IsDisposed)
                 return;
 
-            motionImageBox.Image = image;
-            capturedImageBox.Image = image;
-            forgroundImageBox.Image = image;
+            if (_capture.Retrieve (currentFrame)) {
+                if (!currentFrame.Size.IsEmpty && !previousFrame.Size.IsEmpty &&
+                    currentFrame.Size == previousFrame.Size) {
+
+                    Mat flow = motionDetectionWithOpticalFlow.CalculateOpticalFlow (previousFrame, currentFrame);
+
+                    motionImageBox.Image = flow;
+                    capturedImageBox.Image = currentFrame;
+
+                    Mat frameDiff = currentFrame.Clone ();
+                    CvInvoke.AbsDiff (previousFrame, currentFrame, frameDiff);
+                    forgroundImageBox.Image = frameDiff;
+                }
+                previousFrame = currentFrame.Clone ();
+            }
         }
 
         private void Form1_FormClosed (object sender, FormClosedEventArgs e)

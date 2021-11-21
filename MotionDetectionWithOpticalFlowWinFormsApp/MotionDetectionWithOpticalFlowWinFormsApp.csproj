@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\libMotionDetection.NET\libMotionDetection.NET.csproj" />
     <ProjectReference Include="..\libVideoCapture.NET\libVideoCapture.NET.csproj" />
   </ItemGroup>
 
