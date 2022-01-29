@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotionDetectionWithMotionHi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libVideoCapture.NET", "libVideoCapture.NET\libVideoCapture.NET.csproj", "{FF67CE4F-02EC-4D12-A6FF-469908FA30C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotionDetectionWithOpticalFlowWinFormsApp", "MotionDetectionWithOpticalFlowWinFormsApp\MotionDetectionWithOpticalFlowWinFormsApp.csproj", "{0E636AD3-1993-4057-AF58-F697E345D83A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MotionDetectionWithDenseOpticalFlowWinFormsApp", "MotionDetectionWithDenseOpticalFlowWinFormsApp\MotionDetectionWithDenseOpticalFlowWinFormsApp.csproj", "{0E636AD3-1993-4057-AF58-F697E345D83A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
