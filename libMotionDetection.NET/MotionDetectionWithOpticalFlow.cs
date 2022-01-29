@@ -39,18 +39,24 @@ namespace libMotionDetection
             OpticalFlowPreset = DISOpticalFlow.Preset.Fast,
         };
 
-        private readonly DISOpticalFlow opticalFlow;
+        private readonly DISOpticalFlow denseOpticalFlow;
         public MotionDetectionWithOpticalFlow ()
         {
-            opticalFlow = new DISOpticalFlow ();
+            denseOpticalFlow = new DISOpticalFlow ();
         }
 
         public MotionDetectionWithOpticalFlow (OpticalFlowSetting setting)
         {
-            opticalFlow = new DISOpticalFlow (setting.OpticalFlowPreset);
+            denseOpticalFlow = new DISOpticalFlow (setting.OpticalFlowPreset);
         }
 
-        public Mat CalculateOpticalFlow (Mat prevFrame, Mat currFrame)
+        /// <summary>
+        /// Calculate dense optical flow based on the example here, https://docs.opencv.org/4.5.4/d4/dee/tutorial_optical_flow.html
+        /// </summary>
+        /// <param name="prevFrame">The previous frame</param>
+        /// <param name="currFrame">The current frame</param>
+        /// <returns>a 2D matrix with the same size as the video frames</returns>
+        public Mat CalculateDenseOpticalFlow (Mat prevFrame, Mat currFrame)
         {
             // The currFrame needs to have 1 channel
             if (currFrame.Depth != Emgu.CV.CvEnum.DepthType.Cv8U || currFrame.NumberOfChannels != 1) {
@@ -63,14 +69,23 @@ namespace libMotionDetection
             }
 
             Mat flow = new Mat (prevFrame.Size, Emgu.CV.CvEnum.DepthType.Cv32F, 2);
-            // Based on the example here, https://docs.opencv.org/4.5.4/d4/dee/tutorial_optical_flow.html
-            // Calculate the flow as a 2D vector
-            opticalFlow.Calc (prevFrame, currFrame, flow);
+            // Calculate the flow as a 2D vector which has magnitude and angle
+            denseOpticalFlow.Calc (prevFrame, currFrame, flow);
 
+            return flow;
+        }
+
+        /// <summary>
+        /// Visualize the optical flow in HSV color space
+        /// </summary>
+        /// <param name="opticalFlow">The 2D matrix of optical flow</param>
+        /// <returns></returns>
+        public Mat OpticalFlowVisualizationWithHSV (Mat opticalFlow)
+        {
             VectorOfMat flowParts = new VectorOfMat ();
             // Split the flow in two parts, the magnitude and the angle
-            CvInvoke.Split (flow, flowParts);
-            flow.Dispose ();
+            CvInvoke.Split (opticalFlow, flowParts);
+            opticalFlow.Dispose ();
 
             // Calculate magnitude and angle from a 2D vector.
             Mat angle = new Mat ();

@@ -83,9 +83,9 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
                 if (!currentFrame.Size.IsEmpty && !previousFrame.Size.IsEmpty &&
                     currentFrame.Size == previousFrame.Size) {
 
-                    Mat flow = motionDetectionWithOpticalFlow.CalculateOpticalFlow (previousFrame, currentFrame);
+                    Mat flow = motionDetectionWithOpticalFlow.CalculateDenseOpticalFlow (previousFrame, currentFrame);
 
-                    motionImageBox.Image = flow;
+                    motionImageBox.Image = motionDetectionWithOpticalFlow.OpticalFlowVisualizationWithHSV (flow);
                     capturedImageBox.Image = currentFrame;
 
                     Mat frameDiff = currentFrame.Clone ();
