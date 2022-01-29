@@ -235,9 +235,9 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
             this.label4.Location = new System.Drawing.Point(1224, 171);
             this.label4.Margin = new System.Windows.Forms.Padding(9, 0, 9, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(211, 37);
+            this.label4.Size = new System.Drawing.Size(217, 37);
             this.label4.TabIndex = 12;
-            this.label4.Text = "Forground Mask";
+            this.label4.Text = "Frame Difference";
             // 
             // forgroundImageBox
             // 
@@ -259,9 +259,9 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
             this.label2.Location = new System.Drawing.Point(2358, 171);
             this.label2.Margin = new System.Windows.Forms.Padding(9, 0, 9, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(104, 37);
+            this.label2.Size = new System.Drawing.Size(257, 37);
             this.label2.TabIndex = 10;
-            this.label2.Text = "Motion";
+            this.label2.Text = "Visualization to HSV";
             // 
             // motionImageBox
             // 
@@ -283,9 +283,9 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
             this.label1.Location = new System.Drawing.Point(81, 171);
             this.label1.Margin = new System.Windows.Forms.Padding(9, 0, 9, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(214, 37);
+            this.label1.Size = new System.Drawing.Size(350, 37);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Captured Image:";
+            this.label1.Text = "Captured Image (Greyscale):";
             // 
             // capturedImageBox
             // 
