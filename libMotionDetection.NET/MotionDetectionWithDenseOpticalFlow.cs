@@ -58,19 +58,23 @@ namespace libMotionDetection
         /// <returns>a 2D matrix with the same size as the video frames</returns>
         public Mat CalculateDenseOpticalFlow (Mat prevFrame, Mat currFrame)
         {
+            Mat currFrameGreyscale = new Mat ();
+            Mat prevFrameGreyscale = new Mat ();
             // The currFrame needs to have 1 channel
             if (currFrame.Depth != Emgu.CV.CvEnum.DepthType.Cv8U || currFrame.NumberOfChannels != 1) {
-                CvInvoke.CvtColor (currFrame, currFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+                CvInvoke.CvtColor (currFrame, currFrameGreyscale, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
             }
 
             // The prevFrame needs to have 1 channel
             if (prevFrame.Depth != Emgu.CV.CvEnum.DepthType.Cv8U || prevFrame.NumberOfChannels != 1) {
-                CvInvoke.CvtColor (prevFrame, prevFrame, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
+                CvInvoke.CvtColor (prevFrame, prevFrameGreyscale, Emgu.CV.CvEnum.ColorConversion.Bgr2Gray);
             }
 
             Mat flow = new Mat (prevFrame.Size, Emgu.CV.CvEnum.DepthType.Cv32F, 2);
             // Calculate the flow as a 2D vector which has magnitude and angle
-            denseOpticalFlow.Calc (prevFrame, currFrame, flow);
+            denseOpticalFlow.Calc (prevFrameGreyscale, currFrameGreyscale, flow);
+            currFrameGreyscale.Dispose ();
+            prevFrameGreyscale.Dispose ();
 
             return flow;
         }
