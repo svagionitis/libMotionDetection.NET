@@ -7,11 +7,11 @@ using System.Drawing;
 namespace libMotionDetection
 {
     /// <summary>
-    /// A class for motion detection using optical flow
+    /// A class for motion detection using dense optical flow
     /// </summary>
-    public class MotionDetectionWithOpticalFlow
+    public class MotionDetectionWithDenseOpticalFlow
     {
-        private static readonly ILogger logger = Log.Logger.ForContext (typeof (MotionDetectionWithOpticalFlow));
+        private static readonly ILogger logger = Log.Logger.ForContext (typeof (MotionDetectionWithDenseOpticalFlow));
         private readonly Mat flowBGR = new Mat ();
 
         // A list of motion zones.
@@ -40,12 +40,12 @@ namespace libMotionDetection
         };
 
         private readonly DISOpticalFlow denseOpticalFlow;
-        public MotionDetectionWithOpticalFlow ()
+        public MotionDetectionWithDenseOpticalFlow ()
         {
             denseOpticalFlow = new DISOpticalFlow ();
         }
 
-        public MotionDetectionWithOpticalFlow (OpticalFlowSetting setting)
+        public MotionDetectionWithDenseOpticalFlow (OpticalFlowSetting setting)
         {
             denseOpticalFlow = new DISOpticalFlow (setting.OpticalFlowPreset);
         }

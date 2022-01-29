@@ -11,7 +11,7 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
     {
         private static readonly ILogger logger = Log.Logger.ForContext (typeof (Form1));
 
-        private MotionDetectionWithOpticalFlow motionDetectionWithOpticalFlow;
+        private MotionDetectionWithDenseOpticalFlow motionDetectionWithDenseOpticalFlow;
         private VideoCaptureDevices videoCaptureDevices;
         private VideoCapture _capture = null;
         private string videoFilename = null;
@@ -65,7 +65,7 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
 
             //if camera capture has been successfully created
             if (_capture != null) {
-                motionDetectionWithOpticalFlow = new MotionDetectionWithOpticalFlow ();
+                motionDetectionWithDenseOpticalFlow = new MotionDetectionWithDenseOpticalFlow ();
 
                 _capture.ImageGrabbed += ProcessFrame;
                 _capture.Start ();
@@ -83,9 +83,9 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
                 if (!currentFrame.Size.IsEmpty && !previousFrame.Size.IsEmpty &&
                     currentFrame.Size == previousFrame.Size) {
 
-                    Mat flow = motionDetectionWithOpticalFlow.CalculateDenseOpticalFlow (previousFrame, currentFrame);
+                    Mat flow = motionDetectionWithDenseOpticalFlow.CalculateDenseOpticalFlow (previousFrame, currentFrame);
 
-                    motionImageBox.Image = motionDetectionWithOpticalFlow.OpticalFlowVisualizationWithHSV (flow);
+                    motionImageBox.Image = motionDetectionWithDenseOpticalFlow.OpticalFlowVisualizationWithHSV (flow);
                     capturedImageBox.Image = currentFrame;
 
                     Mat frameDiff = currentFrame.Clone ();
