@@ -86,11 +86,13 @@ namespace MotionDetectionWithOpticalFlowWinFormsApp
                     Mat flow = motionDetectionWithDenseOpticalFlow.CalculateDenseOpticalFlow (previousFrame, currentFrame);
 
                     motionImageBox.Image = motionDetectionWithDenseOpticalFlow.OpticalFlowVisualizationWithHSV (flow);
+                    flow.Dispose ();
                     capturedImageBox.Image = currentFrame;
 
                     Mat frameDiff = currentFrame.Clone ();
                     CvInvoke.AbsDiff (previousFrame, currentFrame, frameDiff);
                     forgroundImageBox.Image = frameDiff;
+                    frameDiff.Dispose ();
                 }
                 previousFrame = currentFrame.Clone ();
             }

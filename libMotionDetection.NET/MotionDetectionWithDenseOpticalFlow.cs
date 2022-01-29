@@ -85,7 +85,6 @@ namespace libMotionDetection
             VectorOfMat flowParts = new VectorOfMat ();
             // Split the flow in two parts, the magnitude and the angle
             CvInvoke.Split (opticalFlow, flowParts);
-            opticalFlow.Dispose ();
 
             // Calculate magnitude and angle from a 2D vector.
             Mat angle = new Mat ();
